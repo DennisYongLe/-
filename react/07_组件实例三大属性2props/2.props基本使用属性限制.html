@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .title {
+            background-color: brown;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- 容器 -->
+    <div id="test"></div>
+    <!-- React -->
+    <script type="text/javascript" src="../js/react.development.js"></script>
+    <!-- ReactDOM -->
+    <script type="text/javascript" src="../js/react-dom.development.js"></script>
+    <!-- jsx转为js -->
+    <script type="text/javascript" src="../js/babel.min.js"></script>
+    <!-- PropTypes对组件标签属性进行限制 -->
+    <script type="text/javascript" src="../js/prop-types.js"></script>
+    <script type="text/babel">
+        class Person extends React.Component {
+            constructor() {
+                super()
+            }
+            render() {
+                const { name, age, sex, speak } = this.props
+                return (
+                    <ul>
+                        <li>{name}</li>
+                        <li>{sex}</li>
+                        <li>{speak()}</li>
+                    </ul >
+                )
+
+            }
+
+        }
+        // 对标签属性进行类型、必要性的限制 
+        Person.propTypes = {
+            name: PropTypes.string.isRequired,
+            speak: PropTypes.func
+        }
+        Person.defaultProps = {
+            sex: '不男不女'
+        }
+        const person = { name: '12', age: '12', speak: function () { return 123 } }
+
+        // ...person只能在标签<>中使用，不能在除标签以外的地方使用
+        // console.log(...person); 不可以这样用
+        ReactDOM.render(<Person {...person} />, document.getElementById('test'))
+
+    </script>
+
+</body>
+
+</html>

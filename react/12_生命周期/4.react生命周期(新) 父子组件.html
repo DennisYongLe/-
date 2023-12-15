@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .title {
+            background-color: brown;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- 容器 -->
+    <div id="test"></div>
+    <!-- React -->
+    <script type="text/javascript" src="../js/17.0.0.1/react.development.js"></script>
+    <!-- ReactDOM -->
+    <script type="text/javascript" src="../js/17.0.0.1/react-dom.development.js"></script>
+    <!-- jsx转为js -->
+    <script type="text/javascript" src="../js/17.0.0.1/babel.min.js"></script>
+    <!-- PropTypes对组件标签属性进行限制 -->
+    <script type="text/javascript" src="../js/17.0.0.1/prop-types.js"></script>
+    <script type="text/babel">
+        class Count extends React.Component {
+            constructor(props) {
+                super(props)
+                console.log('count-constroctor');
+            }
+            state = { count: 0 }
+            static getDerivedStateFromProps(props, state) {
+                console.log('get derived state from props', props, state);
+                return null
+            }
+
+            // 组件挂载完毕
+            componentDidMount() {
+                console.log('componentDidMount');
+            }
+
+            // 控制组件更新的阀门
+            shouldComponentUpdate() {
+                console.log('shouldComponentUpdate');
+                return true
+
+            }
+            // 在更新之前获取快照
+            getSnapshotBeforeUpdate() {
+                console.log('get snapshot before update');
+                return 'passToComponentDidUpdate'
+            }
+
+            componentDidUpdate(preProps, preState, param) {
+                console.log('componentDidUpdate', preState, this.state, param);
+            }
+            // 组件将要卸载的钩子
+            componentWillUnmount() {
+                console.log('componentWillUnmount');
+            }
+
+
+            addCount = () => {
+                this.setState({ count: this.state.count + 1 })
+            }
+            death = () => {
+                ReactDOM.unmountComponentAtNode(document.getElementById('test'))
+            }
+            // 强制更新组件的回调
+            force = () => {
+                this.forceUpdate()
+            }
+            render(h) {
+                console.log("render");
+                return (
+                    <div>
+                        <h1>当前数字为:{this.state.count}</h1>
+                        <button onClick={this.addCount}>+1</button>
+                        <button onClick={this.death}>卸载组件</button>
+                        <button onClick={this.force}>强制更新</button>
+                    </div>
+                )
+            }
+        }
+
+        class Parent extends React.Component {
+            state = { number: 1 }
+            updatenumber = () => {
+                this.setState({ number: this.state.number + 1 })
+            }
+            render() {
+                return (
+                    <div>
+                        <button onClick={this.updatenumber}>update number</button>
+                        <Child number={this.state.number} />
+                    </div>
+                )
+            }
+        }
+        class Child extends React.Component {
+
+
+            shouldComponentUpdate() {
+                console.log('shouldComponentUpdate');
+                return true
+            }
+
+            componentDidUpdate() {
+                console.log('componentDidUpdate');
+            }
+            render() {
+                return (
+                    <div><h1>{this.props.number}</h1></div>
+                )
+
+            }
+
+        }
+        ReactDOM.render(<Count />, document.getElementById('test'))
+
+    </script>
+
+</body>
+
+</html>

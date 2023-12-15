@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .title {
+            background-color: brown;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- 容器 -->
+    <div id="test"></div>
+    <!-- react核心库 -->
+    <script type="text/javascript" src="../js/react.development.js"></script>
+    <!-- 支持DOM操作 -->
+    <script type="text/javascript" src="../js/react-dom.development.js"></script>
+    <!-- jsx转为js -->
+    <script type="text/javascript" src="../js/babel.min.js"></script>
+    <!-- babel 用babel翻译jsx，浏览器去翻译jsx -->
+    <script type="text/babel">
+        const data = [{ id: 1, name: 'react' }, { id: 2, name: 'reactv' }]
+        // 创建虚拟DOM
+        const VDOM = (
+            <div>
+                <h1>前端框架</h1>
+                <ul>
+
+                    {data.map(a => { return <li key={a.id}>{a.name}</li> })}
+                </ul>
+            </div>
+
+        )
+        // 渲染虚拟DOM到容器
+        ReactDOM.render(VDOM, document.getElementById('test'))
+        console.log(VDOM);
+    </script>
+</body>
+
+</html>

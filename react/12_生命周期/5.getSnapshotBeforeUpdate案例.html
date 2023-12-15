@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .container {
+            background-color: rgba(165, 42, 42, 0.507);
+            height: 125px;
+            overflow: auto;
+        }
+
+        .item {
+            color: white;
+            height: 30px;
+            background-color: rgba(0, 0, 0, 0.674);
+        }
+    </style>
+</head>
+
+<body>
+    <!-- 容器 -->
+    <div id="test"></div>
+    <!-- React -->
+    <script type="text/javascript" src="../js/17.0.0.1/react.development.js"></script>
+    <!-- ReactDOM -->
+    <script type="text/javascript" src="../js/17.0.0.1/react-dom.development.js"></script>
+    <!-- jsx转为js -->
+    <script type="text/javascript" src="../js/17.0.0.1/babel.min.js"></script>
+    <!-- PropTypes对组件标签属性进行限制 -->
+    <script type="text/javascript" src="../js/17.0.0.1/prop-types.js"></script>
+    <script type="text/babel">
+        class News extends React.Component {
+            state = { count: 6, newsArr: [] }
+            componentDidMount() {
+
+                this.timer = setInterval(() => {
+                    // this.setState({ count: (this.state.count + 1) % 6 })
+                    // document.getElementById('newsContainer').scrollTop = this.state.count * 30
+                    // console.log();
+                    const { newsArr } = this.state
+                    const news = `新闻${newsArr.length + 1}`
+                    this.setState({ newsArr: [news, ...newsArr] })
+                }, 1000)
+
+            }
+            getSnapshotBeforeUpdate() {
+                return this.refs.list.scrollHeight
+            }
+            componentDidUpdate(preProps, preStates, oldScrollHeight) {
+                this.refs.list.scrollTop += this.refs.list.scrollHeight - oldScrollHeight
+                console.log(this.refs.list.scrollTop);
+            }
+            componentWillUnmount() {
+                clearInterval(this.timer)
+
+            }
+            render() {
+                return (
+                    <div >
+                        <ul className="container" id="newsContainer" ref="list">
+
+                            {this.state.newsArr.map((item, index) => { return <li key={index} className="item">{item}</li> })}
+                        </ul>
+                    </div>
+                )
+            }
+
+        }
+        ReactDOM.render(<News />, document.getElementById('test'))
+
+    </script>
+
+</body>
+
+</html>

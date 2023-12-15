@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .circle {
+            z-index: 10;
+            width: 10px;
+            height: 10px;
+            border-radius: 10px;
+            background-color: red;
+
+        }
+
+        .container {
+            width: 250px;
+            height: 250px;
+            border-radius: 125px;
+            /* border: 1px solid red; */
+            background-color: antiquewhite;
+            /* overflow: hidden; */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: absolute;
+        }
+
+        .hour {
+            width: 50px;
+            height: 10px;
+            position: absolute;
+            left: 115px;
+            background-color: black;
+            transform-origin: 10px;
+        }
+
+        .minute {
+            width: 100px;
+            height: 5px;
+            position: absolute;
+            left: 115px;
+            background-color: grey;
+            transform-origin: 10px;
+        }
+
+        .second {
+            width: 125px;
+            height: 3px;
+            position: absolute;
+            left: 115px;
+            background-color: red;
+            display: block;
+            transform-origin: 10px;
+        }
+
+        .line {
+            width: 2px;
+            height: 1px;
+            background-color: black;
+            position: absolute;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="container" class="container">
+        <span id="circle" class="circle"></span>
+        <span id="hour" class="hour"></span>
+        <span id="minute" class="minute"></span>
+        <span id="second" class="second"></span>
+    </div>
+
+</body>
+<script>
+    const seconds = document.getElementById("second")
+    const hours = document.getElementById("hour")
+    const minutes = document.getElementById("minute")
+    const container = document.getElementById('container')
+    const R = 125
+    for (let i = 0; i < 60; i++) {
+        const line = document.createElement('span')
+        line.class = "line"
+        line.style.left = `${Math.cos(Math.PI / 180 * (90 - (6 * i))) * R + 125}px`
+        line.style.bottom = `${Math.sin(Math.PI / 180 * (90 - (6 * i))) * R + 125}px`
+
+        if (i % 5 == 0) {
+            line.style.width = '10px';
+            line.style.height = ' 2px';
+            line.style.borderRadius = '1px'
+            console.log(line.style.left, line.style.bottom);
+        } else {
+            line.style.width = '5px';
+            line.style.height = '1px';
+
+        }
+
+        line.style.backgroundColor = 'black';
+        line.style.position = 'absolute'
+        line.style.transform = `rotate(${90 + i * 6}deg) `
+
+        container.appendChild(line)
+    }
+    for (let i = 1; i <= 12; i++) {
+        const line = document.createElement('span')
+        line.class = "line"
+        line.style.left = `${Math.cos(Math.PI / 180 * (90 - (30 * i))) * 110 + R}px`
+        line.style.bottom = `${Math.sin(Math.PI / 180 * (90 - (30 * i))) * 110 + R}px`
+        line.textContent = `${i}`
+        line.style.transform = 'translate(-50%,50%)'
+        line.style.fontSize = '10px'
+
+
+        line.style.position = 'absolute'
+
+        container.appendChild(line)
+    }
+    setInterval(() => {
+        const now = new Date()
+        const second = now.getSeconds()
+        const hour = now.getHours()
+        const minute = now.getMinutes()
+        const percentage = minute / 60 * 30
+        const fixedToStartPoint = 90
+        seconds.style.transform = `rotate(${second * 6 - fixedToStartPoint}deg) `
+        hours.style.transform = `rotate(${(hour % 12) * 30 - fixedToStartPoint + percentage}deg)`
+        minutes.style.transform = `rotate(${minute * 6 - fixedToStartPoint}deg)`
+    }, 1000)
+
+
+</script>
+
+</html>

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+</head>
+
+<body>
+    <!-- 容器 -->
+    <div id="test"></div>
+    <!-- react核心库 -->
+    <script type="text/javascript" src="../js/react.development.js"></script>
+    <!-- 支持DOM操作 -->
+    <script type="text/javascript" src="../js/react-dom.development.js"></script>
+    <!-- jsx转为js -->
+    <script type="text/javascript" src="../js/babel.min.js"></script>
+    <!-- babel 用babel翻译jsx，浏览器去翻译jsx -->
+    <script type="text/javascript">
+        // 创建真实DOM
+        const RDOM = document.createElement('a')
+        RDOM.innerText = 'test real dom'
+        document.getElementById('test').appendChild(RDOM)
+
+        // 创建虚拟DOM
+        // const VDOM = React.createElement('h1', { style: { color: 'red' } }, 'test virtual dom')
+        const VDOM = React.createElement('h1', { style: { color: 'red' } }, React.createElement('h1', { style: { color: 'red' } }, 'test virtual dom'))
+        // 渲染虚拟DOM到容器
+        ReactDOM.render(VDOM, document.getElementById('test'))
+    </script>
+</body>
+
+</html>

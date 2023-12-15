@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .container {
+            background-color: rgba(165, 42, 42, 0.507);
+            height: 125px;
+            overflow: auto;
+        }
+
+        .item {
+            color: white;
+            height: 30px;
+            background-color: rgba(0, 0, 0, 0.674);
+        }
+    </style>
+</head>
+
+<body>
+    <!-- 容器 -->
+    <div id="test"></div>
+    <!-- React -->
+    <script type="text/javascript" src="../js/17.0.0.1/react.development.js"></script>
+    <!-- ReactDOM -->
+    <script type="text/javascript" src="../js/17.0.0.1/react-dom.development.js"></script>
+    <!-- jsx转为js -->
+    <script type="text/javascript" src="../js/17.0.0.1/babel.min.js"></script>
+    <!-- PropTypes对组件标签属性进行限制 -->
+    <script type="text/javascript" src="../js/17.0.0.1/prop-types.js"></script>
+    <script type="text/babel">
+        class Person extends React.Component {
+            state = {
+                persons: [
+                    { id: 1, name: "zhang" },
+                    { id: 2, name: "wang" }
+                ]
+            }
+            add = () => {
+                const { persons } = this.state
+                persons.unshift({ id: persons.length + 1, name: 'xiao wang' })
+                this.setState(persons)
+            }
+            render() {
+                return (
+                    <div>
+                        <button onClick={this.add}>小王</button>
+                        <ul>
+                            {this.state.persons.map((item, index) => { return <li key={index}>{index}-{item.id}-{item.name}  <input type="text" /></li> })}
+
+                        </ul>
+                    </div>
+                )
+            }
+        }
+        ReactDOM.render(<Person />, document.getElementById('test'))
+
+    </script>
+
+</body>
+
+</html>
+0 wang67
+1 zhang
+
+0 li
+1 wang
+2 zhang
+
+
+0 wang
+1 zhang
+2 zhang

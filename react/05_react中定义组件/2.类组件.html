@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .title {
+            background-color: brown;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- 容器 -->
+    <div id="test"></div>
+    <!-- react核心库 -->
+    <script type="text/javascript" src="../js/react.development.js"></script>
+    <!-- 支持DOM操作 -->
+    <script type="text/javascript" src="../js/react-dom.development.js"></script>
+    <!-- jsx转为js -->
+    <script type="text/javascript" src="../js/babel.min.js"></script>
+    <!-- babel 用babel翻译jsx，浏览器去翻译jsx -->
+    <script type="text/babel">
+        class MyComponent extends React.Component {
+            // render放在类的原型对象上，供实例使用。
+            render() {
+                return <h2>用类去定义的组件</h2>
+            }
+        }
+        // 渲染组件到页面
+        ReactDOM.render(<MyComponent />, document.getElementById('test'))
+    </script>
+</body>
+
+</html>
